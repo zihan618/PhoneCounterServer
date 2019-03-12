@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="record">
+
+    <resultMap id="baseMap" type="com.phonecounter.server.model.DailyRecord">
+        <id column="id" property="id"/>
+        <result column="timestamp" property="timestamp"/>
+        <result column="time_spent" property="timeSpent"/>
+        <result column="package_name" property="packageName"/>
+    </resultMap>
+
+    <insert id="upload">
+        insert into "daily_record" (id, "timestamp", package_name, time_spent, user_id) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.timestamp}, #{item.packageName}, #{item.timeSpent}, #{userId})
+        </foreach>
+    </insert>
+
+    <select id="download" resultMap="baseMap">
+        select *
+        from "daily_record"
+        where user_id = #{userId}
+    </select>
+
+</mapper>
