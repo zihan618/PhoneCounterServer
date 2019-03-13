@@ -23,14 +23,16 @@ public class UserDao {
     }
 
     public User login(User user) {
-        SqlSession session = sqlSessionFactory.openSession();
-        User one = session.selectOne(namespace + "login", user);
-        return one;
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            User one = session.selectOne(namespace + "login", user);
+            return one;
+        }
     }
 
     public boolean register(User user) {
-        SqlSession session = sqlSessionFactory.openSession();
-        session.insert(namespace + "register", user);
-        return true;
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            session.insert(namespace + "register", user);
+            return true;
+        }
     }
 }

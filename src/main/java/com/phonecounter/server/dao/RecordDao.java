@@ -1,6 +1,7 @@
 package com.phonecounter.server.dao;
 
 import com.phonecounter.server.model.DailyRecord;
+import com.phonecounter.server.model.PackageApp;
 import com.phonecounter.server.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
@@ -28,14 +29,32 @@ public class RecordDao {
         Map<String, Object> map = new HashMap<>();
         map.put("list", dailyRecords);
         map.put("userId", userId);
-        SqlSession session = sqlSessionFactory.openSession();
-        session.insert(namespace + "upload", map);
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            session.insert(namespace + "upload", map);
+        }
     }
 
     public List<DailyRecord> gerRecord(Long userId) {
-        SqlSession session = sqlSessionFactory.openSession();
-        List<DailyRecord> records = session.selectList(namespace + "download", userId);
-        return records;
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            List<DailyRecord> records = session.selectList(namespace + "download", userId);
+            return records;
+        }
+    }
+
+    public void saveKV(List<PackageApp> dailyRecords, Long userId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", dailyRecords);
+        map.put("userId", userId);
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            session.insert(namespace + "uploadKV", map);
+        }
+    }
+
+    public List<PackageApp> gerKV(Long userId) {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            List<PackageApp> records = session.selectList(namespace + "downloadKV", userId);
+            return records;
+        }
     }
 
 }

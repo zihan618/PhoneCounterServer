@@ -10,6 +10,11 @@
         <result column="package_name" property="packageName"/>
     </resultMap>
 
+    <resultMap id="baseMap2" type="com.phonecounter.server.model.PackageApp">
+        <result column="package_name" property="packageName"/>
+        <result column="app_name" property="appName"/>
+    </resultMap>
+
     <insert id="upload">
         insert into "daily_record" (id, "timestamp", package_name, time_spent, user_id) values
         <foreach collection="list" item="item" separator=",">
@@ -22,5 +27,19 @@
         from "daily_record"
         where user_id = #{userId}
     </select>
+
+    <insert id="uploadKV">
+        insert into "package_app"(package_name, app_name, user_id) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.packageName}, #{item.appName}, #{userId})
+        </foreach>
+    </insert>
+
+    <select id="downloadKV" resultMap="baseMap2">
+        select *
+        from "package_app"
+        where user_id = #{userId}
+    </select>
+
 
 </mapper>
