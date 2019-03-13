@@ -21,9 +21,8 @@ public class UserController {
 
     @PostMapping("login")
     public WebResult login(@RequestBody User user) {
-        WebResult webResult = new WebResult();
+        WebResult<Integer> webResult = new WebResult<>();
         try {
-
             Integer res = userService.login(user);
             if (res != null) {
                 webResult.setSuccess(true);
@@ -38,7 +37,7 @@ public class UserController {
 
     @PostMapping("user")
     public WebResult register(@RequestBody User user) {
-        WebResult webResult = new WebResult();
+        WebResult<Integer> webResult = new WebResult<>();
         try {
             boolean res = userService.register(user);
             if (res) {

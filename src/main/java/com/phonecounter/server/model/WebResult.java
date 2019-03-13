@@ -1,14 +1,14 @@
 package com.phonecounter.server.model;
 
-public class WebResult {
+public class WebResult<T> {
     private Boolean success;
-    private Object data;
+    private T data;
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 
