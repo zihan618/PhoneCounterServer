@@ -4,6 +4,10 @@ spring:
     username: postgres
     password: wecare4U
     driver-class-name: org.postgresql.Driver
+server:
+  port: 8083
+  servlet:
+    context-path: /server
 
 mybatis:
   mapper-locations: mapper/*.xml
